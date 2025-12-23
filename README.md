@@ -58,18 +58,7 @@ Run the dashboard:
 streamlit run src/dashboard.py
 
 ⚙️ Folder Structure
-b-predictor/
-├─ src/
-│  ├─ dashboard.py       # Main Streamlit dashboard
-│  ├─ root_cause.py      # SHAP root-cause module
-│  └─ intro.py           # Landing page intro (particles)
-├─ models/
-│  ├─ anomaly_model.pkl
-│  └─ lstm_model.h5
-├─ data/
-│  └─ metrics.csv
-├─ requirements.txt
-└─ README.md
+<img width="381" height="687" alt="image" src="https://github.com/user-attachments/assets/4b6bed0f-0c39-4484-837e-bea3a1193c6a" />
 
 📊 Technology Stack
 
