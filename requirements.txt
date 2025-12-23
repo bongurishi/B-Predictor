@@ -5,10 +5,11 @@ scikit-learn==1.8.0
 tensorflow-cpu==2.13.0
 keras==2.13.1
 shap==0.50.0
-streamlit==3.10
+streamlit==1.52.2
 matplotlib==3.7.2
 plotly==6.5.0
 prometheus-client==0.16.0
+
 
 
 
