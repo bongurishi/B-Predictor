@@ -1,29 +1,14 @@
-pandas
-numpy
-scikit-learn
-tensorflow
-keras
-shap
-streamlit
-matplotlib
-plotly
 prometheus
-streamlit==1.30.0
-pandas
-numpy
-plotly
-tensorflow
-scikit-learn
-shap
 pandas==2.3.3
 numpy==1.26.1
 scikit-learn==1.8.0
 tensorflow-cpu==2.13.0
 keras==2.13.1
 shap==0.50.0
-streamlit==1.52.2
+streamlit==3.10
 matplotlib==3.7.2
 plotly==6.5.0
 prometheus-client==0.16.0
+
 
 
