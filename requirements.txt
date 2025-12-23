@@ -1,0 +1,10 @@
+pandas
+numpy
+scikit-learn
+tensorflow
+keras
+shap
+streamlit
+matplotlib
+plotly
+prometheus
