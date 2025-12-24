@@ -1,16 +1,13 @@
 
-pandas==2.3.3
-numpy==1.26.1
-scikit-learn==1.8.0
-tensorflow-cpu==2.13.0
-keras==2.13.1
-shap==0.50.0
-streamlit==1.52.2
-matplotlib==3.7.2
-plotly==6.5.0
-
- psutil
-
+streamlit>=1.28.0
+pandas>=2.1.0  # Changed from 2.3.3 (2.1.0 supports Python 3.10)
+numpy>=1.24.0
+scikit-learn>=1.3.0,<=1.7.0  # Use 1.7.x for Python 3.10 compatibility
+tensorflow>=2.15.0  # Updated from 2.13.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.17.0
+psutil>=5.9.0  # Changed from prometheus to psutil
 
 
 
