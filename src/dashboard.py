@@ -574,6 +574,7 @@ def render_tech_intro():
         st.components.v1.html(tagline_html, height=100)
         
         # Sub-header with tech stats
+        st.markdown('<div class="sub-header">PREDICT → DETECT → EXPLAIN</div>', unsafe_allow_html=True)
         st.markdown('<div class="sub-header">LIVE SYSTEM MONITORING • REAL-TIME METRICS</div>', unsafe_allow_html=True)
         st.markdown('<div class="sub-header">ACTIVE PREDICTIVE INTELLIGENCE PLATFORM v2.1</div>', unsafe_allow_html=True)
         
@@ -1538,3 +1539,4 @@ if __name__ == "__main__":
                 st.session_state.show_dashboard = False
                 stop_realtime_data_collection()
                 st.rerun()
+
