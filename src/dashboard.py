@@ -1033,7 +1033,7 @@ class BPredictorDashboard:
             st.info("Anomaly detection initializing...")
         
         st.markdown('</div>', unsafe_allow_html=True)
-    
+        
     def render_live_metrics(self):
         """Enhanced metrics view with LIVE data"""
         st.markdown('<div class="dashboard-container">', unsafe_allow_html=True)
@@ -1081,13 +1081,22 @@ class BPredictorDashboard:
         </div>
         """, unsafe_allow_html=True)
         
-        # All metrics in one chart
+        # All metrics in one chart - FIXED VERSION
         st.subheader("📈 All Live Metrics Overview")
+        
+        # Create a simpler visualization - individual metrics in subplots
         fig = go.Figure()
         
         # Add each metric as a trace
         metrics_to_plot = [col for col in self.feature_cols if col in self.df.columns]
         colors = ['#00ffea', '#ff00ff', '#ffaa00', '#00ff88', '#0088ff']
+        metric_names = {
+            'cpu_usage': 'CPU Usage (%)',
+            'memory_usage': 'Memory Usage (%)',
+            'disk_io': 'Disk I/O (MB)',
+            'network_latency': 'Network (MB)',
+            'error_rate': 'Error Rate'
+        }
         
         for i, metric in enumerate(metrics_to_plot):
             if metric in self.df.columns:
@@ -1096,35 +1105,122 @@ class BPredictorDashboard:
                     x=self.df["timestamp"],
                     y=self.df[metric],
                     mode='lines',
-                    name=metric.replace('_', ' ').title(),
+                    name=metric_names.get(metric, metric.replace('_', ' ').title()),
                     line=dict(color=color, width=2),
                     yaxis=f"y{i+1}" if i > 0 else "y"
                 ))
         
-        # Create multiple y-axes if needed
-        layout_updates = {}
+        # Create layout with proper axis configuration
+        layout = {
+            'title': "All System Metrics - Live Feed",
+            'template': "plotly_dark",
+            'plot_bgcolor': 'rgba(10, 25, 47, 0.8)',
+            'paper_bgcolor': 'rgba(10, 25, 47, 0.8)',
+            'hovermode': 'x unified',
+            'height': 500,
+            'showlegend': True,
+            'legend': dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.02,
+                xanchor="right",
+                x=1,
+                bgcolor='rgba(10, 25, 47, 0.8)',
+                font=dict(color='white')
+            )
+        }
+        
+        # Add secondary axes properly
         if len(metrics_to_plot) > 1:
             for i in range(1, len(metrics_to_plot)):
-                layout_updates[f"yaxis{i+1}"] = dict(
-                    title=metrics_to_plot[i].replace('_', ' ').title(),
-                    titlefont=dict(color=colors[i % len(colors)]),
+                axis_name = f"yaxis{i+1}"
+                layout[axis_name] = dict(
+                    title=dict(
+                        text=metric_names.get(metrics_to_plot[i], metrics_to_plot[i].replace('_', ' ').title()),
+                        font=dict(color=colors[i % len(colors)])
+                    ),
                     tickfont=dict(color=colors[i % len(colors)]),
                     overlaying="y",
-                    side="right" if i % 2 == 0 else "left",
-                    position=0.85 if i % 2 == 0 else 0.15
+                    side="right",
+                    position=0.85
                 )
         
-        fig.update_layout(
-            title="All System Metrics - Live Feed",
-            template="plotly_dark",
-            plot_bgcolor='rgba(10, 25, 47, 0.8)',
-            paper_bgcolor='rgba(10, 25, 47, 0.8)',
-            hovermode='x unified',
-            height=500,
-            **layout_updates
-        )
+        # Set primary y-axis
+        if metrics_to_plot:
+            layout['yaxis'] = dict(
+                title=dict(
+                    text=metric_names.get(metrics_to_plot[0], metrics_to_plot[0].replace('_', ' ').title()),
+                    font=dict(color=colors[0])
+                ),
+                tickfont=dict(color=colors[0])
+            )
+        
+        fig.update_layout(**layout)
         
         st.plotly_chart(fig, use_container_width=True)
+        
+        # Alternative: Show metrics in separate subplots for clarity
+        st.subheader("📊 Individual Metric Views")
+        
+        # Create subplots for each metric
+        for i, metric in enumerate(metrics_to_plot[:4]):  # Show first 4 metrics max
+            if metric in self.df.columns:
+                col1, col2 = st.columns([3, 1])
+                
+                with col1:
+                    # Create individual chart for each metric
+                    fig_single = go.Figure()
+                    fig_single.add_trace(go.Scatter(
+                        x=self.df["timestamp"],
+                        y=self.df[metric],
+                        mode='lines',
+                        name=metric_names.get(metric, metric.replace('_', ' ').title()),
+                        line=dict(color=colors[i % len(colors)], width=3),
+                        fill='tozeroy' if metric in ['cpu_usage', 'memory_usage'] else None,
+                        fillcolor=f'rgba{tuple(int(colors[i % len(colors)].lstrip("#")[j:j+2], 16) for j in (0, 2, 4)) + (0.2,)}'
+                    ))
+                    
+                    # Get latest value
+                    latest_value = self.df[metric].iloc[-1] if len(self.df) > 0 else 0
+                    
+                    fig_single.update_layout(
+                        title=f"{metric_names.get(metric, metric.replace('_', ' ').title())} - Current: {latest_value:.2f}",
+                        template="plotly_dark",
+                        plot_bgcolor='rgba(10, 25, 47, 0.8)',
+                        paper_bgcolor='rgba(10, 25, 47, 0.8)',
+                        height=250,
+                        showlegend=False,
+                        margin=dict(l=20, r=20, t=40, b=20)
+                    )
+                    
+                    st.plotly_chart(fig_single, use_container_width=True)
+                
+                with col2:
+                    # Show stats
+                    if len(self.df) > 0:
+                        current = self.df[metric].iloc[-1]
+                        avg = self.df[metric].mean()
+                        min_val = self.df[metric].min()
+                        max_val = self.df[metric].max()
+                        
+                        # Determine color based on value for CPU and Memory
+                        if metric in ['cpu_usage', 'memory_usage']:
+                            value_color = "#ff3333" if current > 80 else "#ffaa00" if current > 60 else "#00ff88"
+                        else:
+                            value_color = colors[i % len(colors)]
+                        
+                        st.markdown(f"""
+                        <div style="background: rgba(10, 25, 47, 0.8); padding: 15px; border-radius: 10px; border-left: 4px solid {value_color}; margin-top: 20px;">
+                            <div style="font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: {value_color}; margin-bottom: 10px;">
+                                Current: {current:.1f}
+                            </div>
+                            <div style="font-family: 'Exo 2', sans-serif; color: #a0a0a0; font-size: 0.8rem;">
+                                Avg: {avg:.1f}<br>
+                                Min: {min_val:.1f}<br>
+                                Max: {max_val:.1f}
+                            </div>
+                        </div>
+                        """, unsafe_allow_html=True)
         
         # Latest live metrics table
         st.subheader("🔄 Latest Live Readings")
@@ -1133,14 +1229,14 @@ class BPredictorDashboard:
             latest_readings = self.df.tail(10).copy()
             
             # Format timestamp for display
-            latest_readings['Time'] = latest_readings['timestamp'].dt.strftime('%H:%M:%S.%f').str[:-3]
+            latest_readings['Time'] = latest_readings['timestamp'].dt.strftime('%H:%M:%S')
             
             # Select columns to display
             display_cols = ['Time'] + [col for col in self.feature_cols if col in latest_readings.columns]
             if 'anomaly_label' in latest_readings.columns:
                 display_cols.append('anomaly_label')
             
-            # Create a styled dataframe
+            # Create styled dataframe
             st.dataframe(
                 latest_readings[display_cols].style.format({
                     'cpu_usage': '{:.1f}%',
@@ -1159,15 +1255,28 @@ class BPredictorDashboard:
             )
         
         # Refresh button
-        if st.button("🔄 Refresh Live Data", use_container_width=True, type="primary"):
-            # Force new data collection
-            try:
-                live_data = collect_metrics()
-                st.session_state.metrics_history.append(live_data)
-                st.session_state.last_update_time = datetime.now()
-                st.rerun()
-            except Exception as e:
-                st.error(f"Error refreshing: {e}")
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            if st.button("🔄 Refresh Live Data", use_container_width=True, type="primary"):
+                # Force new data collection
+                try:
+                    live_data = collect_metrics()
+                    st.session_state.metrics_history.append(live_data)
+                    st.session_state.last_update_time = datetime.now()
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"Error refreshing: {e}")
+        
+        with col2:
+            if st.button("📥 Export Data", use_container_width=True):
+                # Export current data
+                csv = self.df.to_csv(index=False)
+                st.download_button(
+                    label="Download CSV",
+                    data=csv,
+                    file_name=f"system_metrics_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                    mime="text/csv"
+                )
         
         st.markdown('</div>', unsafe_allow_html=True)
     
@@ -1539,4 +1648,5 @@ if __name__ == "__main__":
                 st.session_state.show_dashboard = False
                 stop_realtime_data_collection()
                 st.rerun()
+
 
