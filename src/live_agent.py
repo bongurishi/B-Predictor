@@ -9,7 +9,7 @@ def collect_metrics():
         "memory_usage": psutil.virtual_memory().percent,
         "disk_io": psutil.disk_io_counters().read_bytes / 1e6,
         "network_latency": psutil.net_io_counters().bytes_sent / 1e6,
-        "error_rate": 0
+        "error_rate": 0.0
     }
 
 def stream_metrics():
@@ -18,9 +18,10 @@ def stream_metrics():
         data = collect_metrics()
         history.append(data)
 
-        # Keep last 200 points only (sliding window)
+        # Sliding window
         if len(history) > 200:
             history.pop(0)
 
         yield history
         time.sleep(2)
+
