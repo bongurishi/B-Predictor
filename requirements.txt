@@ -1,4 +1,4 @@
-prometheus
+
 pandas==2.3.3
 numpy==1.26.1
 scikit-learn==1.8.0
@@ -8,9 +8,9 @@ shap==0.50.0
 streamlit==1.52.2
 matplotlib==3.7.2
 plotly==6.5.0
-prometheus-client==0.16.0
 
  psutil
+
 
 
 
