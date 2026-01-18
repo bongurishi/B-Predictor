@@ -3,7 +3,7 @@ import pandas as pd
 import time
 from datetime import datetime
 
-print("🟢 B-Predictor Agent Started (LIVE DEVICE DATA)")
+print(" B-Predictor Agent Started (LIVE DEVICE DATA)")
 
 while True:
     data = {
@@ -19,3 +19,4 @@ while True:
     df.to_csv("data/metrics.csv", mode="a", header=False, index=False)
 
     time.sleep(2)
+
