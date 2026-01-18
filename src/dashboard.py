@@ -143,7 +143,7 @@ def get_latest_metrics_df():
 # ---------- PAGE CONFIG ----------
 st.set_page_config(
     page_title="B-Predictor AI | LIVE Predictive System Intelligence",
-    page_icon="⚡",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
@@ -306,7 +306,7 @@ st.markdown("""
     }
     
     .predict-button:after {
-        content: '⚡';
+        content: '';
         position: absolute;
         right: 20px;
         animation: float 1.5s infinite ease-in-out;
@@ -581,10 +581,10 @@ def render_tech_intro():
         # Tech stats badges
         st.markdown("""
         <div style="text-align: center; margin: 30px 0;">
-            <span class="stat-badge">⚡ LIVE DATA STREAM</span>
-            <span class="stat-badge">📊 REAL METRICS</span>
-            <span class="stat-badge">🧠 ACTIVE AI</span>
-            <span class="stat-badge">🔮 LIVE PREDICTIONS</span>
+            <span class="stat-badge"> LIVE DATA STREAM</span>
+            <span class="stat-badge"> REAL METRICS</span>
+            <span class="stat-badge"> ACTIVE AI</span>
+            <span class="stat-badge"> LIVE PREDICTIONS</span>
         </div>
         """, unsafe_allow_html=True)
         
@@ -661,7 +661,7 @@ class BPredictorDashboard:
                 
         except Exception as e:
             # Create simple fallback models for demo if real ones don't exist
-            st.warning(f"⚠️ AI models not found. Using simulated AI detection.")
+            st.warning(f" AI models not found. Using simulated AI detection.")
             st.session_state['models_loaded'] = False
             self.create_fallback_models()
     
@@ -780,7 +780,7 @@ class BPredictorDashboard:
         st.sidebar.markdown("""
         <div style="text-align: center; padding: 20px 0; border-bottom: 1px solid rgba(0, 255, 234, 0.2);">
             <div style="font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #00ffea; margin-bottom: 10px;">
-                ⚡ LIVE CONTROL
+                 LIVE CONTROL
             </div>
             <div style="font-family: 'Exo 2', sans-serif; font-size: 0.9rem; color: #a0a0a0;">
                 Real-time System Monitoring
@@ -806,11 +806,11 @@ class BPredictorDashboard:
         
         # Navigation with icons
         pages = [
-            ("🏠", "Dashboard", "System Overview"),
-            ("📊", "Live Metrics", "Real-time Monitoring"),
-            ("📈", "LSTM Forecast", "Predictive Analytics"),
-            ("🔍", "Root-Cause Analysis", "SHAP Explanations"),
-            ("⚡", "Decision Intelligence", "AI Recommendations")
+            ("", "Dashboard", "System Overview"),
+            ("", "Live Metrics", "Real-time Monitoring"),
+            ("", "LSTM Forecast", "Predictive Analytics"),
+            ("", "Root-Cause Analysis", "SHAP Explanations"),
+            ("", "Decision Intelligence", "AI Recommendations")
         ]
         
         for icon, name, desc in pages:
@@ -856,7 +856,7 @@ class BPredictorDashboard:
         st.sidebar.markdown("---")
         col1, col2 = st.sidebar.columns(2)
         with col1:
-            if st.button("🔄 Refresh", use_container_width=True):
+            if st.button(" Refresh", use_container_width=True):
                 # Force immediate data collection
                 try:
                     live_data = collect_metrics()
@@ -867,7 +867,7 @@ class BPredictorDashboard:
                     st.error(f"Error collecting: {e}")
         
         with col2:
-            if st.button("⏹️ Stop", use_container_width=True):
+            if st.button(" Stop", use_container_width=True):
                 stop_realtime_data_collection()
                 st.rerun()
     
@@ -886,7 +886,7 @@ class BPredictorDashboard:
             total_metrics = len(st.session_state.metrics_history)
             st.markdown(f"""
             <div class="tech-card">
-                <div style="font-size: 0.9rem; color: #a0a0a0;">📊 Live Metrics</div>
+                <div style="font-size: 0.9rem; color: #a0a0a0;"> Live Metrics</div>
                 <div class="metric-value" style="color: #00ffea;">{total_metrics}</div>
                 <div style="font-size: 0.8rem; color: #00ff88;">Collected in real-time</div>
             </div>
@@ -902,7 +902,7 @@ class BPredictorDashboard:
                 
             st.markdown(f"""
             <div class="tech-card">
-                <div style="font-size: 0.9rem; color: #a0a0a0;">⚠️ Live Anomalies</div>
+                <div style="font-size: 0.9rem; color: #a0a0a0;"> Live Anomalies</div>
                 <div class="metric-value" style="color: {anomaly_color};">{anomaly_count}</div>
                 <div style="font-size: 0.8rem; color: {anomaly_color};">Detected by AI</div>
             </div>
@@ -918,7 +918,7 @@ class BPredictorDashboard:
                 
             st.markdown(f"""
             <div class="tech-card">
-                <div style="font-size: 0.9rem; color: #a0a0a0;">⚡ Current CPU</div>
+                <div style="font-size: 0.9rem; color: #a0a0a0;"> Current CPU</div>
                 <div class="metric-value" style="color: {cpu_color};">{current_cpu:.1f}%</div>
                 <div style="font-size: 0.8rem; color: {cpu_color};">Live reading</div>
             </div>
@@ -936,7 +936,7 @@ class BPredictorDashboard:
                 
             st.markdown(f"""
             <div class="tech-card">
-                <div style="font-size: 0.9rem; color: #a0a0a0;">🕒 Last Update</div>
+                <div style="font-size: 0.9rem; color: #a0a0a0;"> Last Update</div>
                 <div class="metric-value" style="color: {time_color}; font-size: 2rem;">{time_str}</div>
                 <div style="font-size: 0.8rem; color: {time_color};">Real-time stream</div>
             </div>
@@ -958,7 +958,7 @@ class BPredictorDashboard:
         col1, col2 = st.columns(2)
         
         with col1:
-            st.subheader("📈 Live CPU Usage")
+            st.subheader(" Live CPU Usage")
             if not self.df.empty and 'cpu_usage' in self.df.columns and 'timestamp' in self.df.columns:
                 fig = px.line(self.df, x="timestamp", y="cpu_usage", 
                              title=f"Real CPU Usage: {self.df['cpu_usage'].iloc[-1]:.1f}%", 
@@ -979,7 +979,7 @@ class BPredictorDashboard:
                 st.info("Collecting CPU data...")
         
         with col2:
-            st.subheader("📊 Live Memory Usage")
+            st.subheader(" Live Memory Usage")
             if not self.df.empty and 'memory_usage' in self.df.columns and 'timestamp' in self.df.columns:
                 fig = px.line(self.df, x="timestamp", y="memory_usage", 
                              title=f"Real Memory Usage: {self.df['memory_usage'].iloc[-1]:.1f}%", 
@@ -999,7 +999,7 @@ class BPredictorDashboard:
         
         # Live anomalies table
         st.markdown("---")
-        st.subheader("🚨 Recent Anomalies Detected")
+        st.subheader(" Recent Anomalies Detected")
         if not self.df.empty and 'anomaly_label' in self.df.columns:
             anomalies = self.df[self.df['anomaly_label'].isin(['Critical', 'Warning'])]
             if not anomalies.empty:
@@ -1022,13 +1022,13 @@ class BPredictorDashboard:
                                 </div>
                             </div>
                             <div style="font-size: 1.5rem; color: {severity_color};">
-                                {'🔴' if row['anomaly_label'] == 'Critical' else '🟡'}
+                                {'' if row['anomaly_label'] == 'Critical' else ''}
                             </div>
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
             else:
-                st.success("✅ No anomalies detected in recent data")
+                st.success(" No anomalies detected in recent data")
         else:
             st.info("Anomaly detection initializing...")
         
@@ -1037,13 +1037,13 @@ class BPredictorDashboard:
     def render_live_metrics(self):
         """Enhanced metrics view with LIVE data"""
         st.markdown('<div class="dashboard-container">', unsafe_allow_html=True)
-        st.markdown('<div class="main-header" style="font-size: 3rem;">📊 LIVE SYSTEM METRICS</div>', unsafe_allow_html=True)
+        st.markdown('<div class="main-header" style="font-size: 3rem;"> LIVE SYSTEM METRICS</div>', unsafe_allow_html=True)
         
         # Update with latest data
         self.update_live_data()
         
         if self.df.empty or len(self.df) < 2:
-            st.warning("📡 Collecting initial live data... Please wait a few seconds.")
+            st.warning(" Collecting initial live data... Please wait a few seconds.")
             # Try to collect some data now
             for _ in range(3):
                 try:
@@ -1082,7 +1082,7 @@ class BPredictorDashboard:
         """, unsafe_allow_html=True)
         
         # All metrics in one chart - FIXED VERSION
-        st.subheader("📈 All Live Metrics Overview")
+        st.subheader(" All Live Metrics Overview")
         
         # Create a simpler visualization - individual metrics in subplots
         fig = go.Figure()
@@ -1160,7 +1160,7 @@ class BPredictorDashboard:
         st.plotly_chart(fig, use_container_width=True)
         
         # Alternative: Show metrics in separate subplots for clarity
-        st.subheader("📊 Individual Metric Views")
+        st.subheader(" Individual Metric Views")
         
         # Create subplots for each metric
         for i, metric in enumerate(metrics_to_plot[:4]):  # Show first 4 metrics max
@@ -1223,7 +1223,7 @@ class BPredictorDashboard:
                         """, unsafe_allow_html=True)
         
         # Latest live metrics table
-        st.subheader("🔄 Latest Live Readings")
+        st.subheader(" Latest Live Readings")
         if len(self.df) > 0:
             # Show last 10 readings
             latest_readings = self.df.tail(10).copy()
@@ -1257,7 +1257,7 @@ class BPredictorDashboard:
         # Refresh button
         col1, col2 = st.columns([3, 1])
         with col1:
-            if st.button("🔄 Refresh Live Data", use_container_width=True, type="primary"):
+            if st.button(" Refresh Live Data", use_container_width=True, type="primary"):
                 # Force new data collection
                 try:
                     live_data = collect_metrics()
@@ -1268,7 +1268,7 @@ class BPredictorDashboard:
                     st.error(f"Error refreshing: {e}")
         
         with col2:
-            if st.button("📥 Export Data", use_container_width=True):
+            if st.button(" Export Data", use_container_width=True):
                 # Export current data
                 csv = self.df.to_csv(index=False)
                 st.download_button(
@@ -1283,12 +1283,12 @@ class BPredictorDashboard:
     def render_lstm_forecast(self):
         """LSTM forecast view"""
         st.markdown('<div class="dashboard-container">', unsafe_allow_html=True)
-        st.markdown('<div class="main-header" style="font-size: 3rem;">📈 PREDICTIVE ANALYTICS</div>', unsafe_allow_html=True)
+        st.markdown('<div class="main-header" style="font-size: 3rem;"> PREDICTIVE ANALYTICS</div>', unsafe_allow_html=True)
         
         self.update_live_data()
         
         if self.X_seq is None or self.y_pred is None:
-            st.warning("📊 Collecting more data for predictions... Need at least 10 data points.")
+            st.warning(" Collecting more data for predictions... Need at least 10 data points.")
             # Show progress
             if len(self.df) > 0:
                 progress = min(len(self.df) / 10, 1.0)
@@ -1330,21 +1330,21 @@ class BPredictorDashboard:
         current_risk = self.y_pred[-1] if len(self.y_pred) > 0 else 0
         
         if current_risk < 0.3:
-            risk_level = "🟢 LOW"
+            risk_level = " LOW"
             risk_color = "#00ff88"
             recommendation = "System operating normally"
         elif current_risk < 0.7:
-            risk_level = "🟡 MEDIUM"
+            risk_level = " MEDIUM"
             risk_color = "#ffaa00"
             recommendation = "Monitor system closely"
         else:
-            risk_level = "🔴 HIGH"
+            risk_level = " HIGH"
             risk_color = "#ff3333"
             recommendation = "Take immediate action"
         
         st.markdown(f"""
         <div class="tech-card">
-            <div style="font-size: 1.2rem; color: #00ffea;">📊 Live Forecast Insights</div>
+            <div style="font-size: 1.2rem; color: #00ffea;"> Live Forecast Insights</div>
             <div style="margin: 20px 0;">
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
                     <div style="padding: 15px; background: rgba(0, 255, 234, 0.1); border-radius: 10px;">
@@ -1362,7 +1362,7 @@ class BPredictorDashboard:
                 </div>
             </div>
             <div style="color: {risk_color}; font-size: 1rem; font-weight: bold; padding: 10px; background: rgba{tuple(int(risk_color.lstrip('#')[i:i+2], 16) for i in (0, 2, 4)) + (0.1,)}; border-radius: 8px; margin-top: 10px;">
-                ⚡ Recommendation: {recommendation}
+                 Recommendation: {recommendation}
             </div>
             <div style="color: #a0a0a0; font-size: 0.9rem; margin-top: 15px;">
                 Based on LSTM neural network analysis of {len(self.df)} live data points
@@ -1423,7 +1423,7 @@ class BPredictorDashboard:
             
             st.markdown(f"""
             <div class="tech-card">
-                <div style="font-size: 1.2rem; color: #00ffea;">🧠 Live Analysis Results</div>
+                <div style="font-size: 1.2rem; color: #00ffea;"> Live Analysis Results</div>
                 <div style="margin: 20px 0;">
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
                         <div style="padding: 10px; background: rgba(255, 51, 51, 0.1); border-radius: 8px;">
@@ -1447,7 +1447,7 @@ class BPredictorDashboard:
     def render_decision_intelligence(self):
         """Decision intelligence with live data"""
         st.markdown('<div class="dashboard-container">', unsafe_allow_html=True)
-        st.markdown('<div class="main-header" style="font-size: 3rem;">⚡ DECISION INTELLIGENCE</div>', unsafe_allow_html=True)
+        st.markdown('<div class="main-header" style="font-size: 3rem;"> DECISION INTELLIGENCE</div>', unsafe_allow_html=True)
         
         self.update_live_data()
         
@@ -1462,7 +1462,7 @@ class BPredictorDashboard:
             if cpu > 85:
                 recommendations.append({
                     "action": "Scale CPU resources immediately",
-                    "priority": "🔴 CRITICAL",
+                    "priority": " CRITICAL",
                     "eta": "5min",
                     "reason": f"CPU at {cpu:.1f}% (Critical)",
                     "icon": "⚡"
@@ -1470,10 +1470,10 @@ class BPredictorDashboard:
             elif cpu > 70:
                 recommendations.append({
                     "action": "Monitor CPU load and consider scaling",
-                    "priority": "🟡 WARNING",
+                    "priority": " WARNING",
                     "eta": "15min",
                     "reason": f"CPU at {cpu:.1f}% (High)",
-                    "icon": "📈"
+                    "icon": ""
                 })
             
             # Memory-based recommendations
@@ -1481,38 +1481,38 @@ class BPredictorDashboard:
             if memory > 80:
                 recommendations.append({
                     "action": "Check for memory leaks and optimize",
-                    "priority": "🔴 CRITICAL",
+                    "priority": " CRITICAL",
                     "eta": "10min",
                     "reason": f"Memory at {memory:.1f}% (Critical)",
-                    "icon": "💾"
+                    "icon": ""
                 })
             elif memory > 65:
                 recommendations.append({
                     "action": "Review memory usage patterns",
-                    "priority": "🟡 WARNING",
+                    "priority": " WARNING",
                     "eta": "30min",
                     "reason": f"Memory at {memory:.1f}% (High)",
-                    "icon": "📊"
+                    "icon": ""
                 })
             
             # General recommendations
             if len(recommendations) == 0:
                 recommendations.append({
                     "action": "System operating within normal parameters",
-                    "priority": "🟢 NORMAL",
+                    "priority": " NORMAL",
                     "eta": "N/A",
                     "reason": "All metrics within safe ranges",
-                    "icon": "✅"
+                    "icon": ""
                 })
             
             # Add proactive recommendations
             if 'anomaly' in self.df.columns and (self.df['anomaly'] == -1).sum() > 0:
                 recommendations.append({
                     "action": "Review recent anomaly patterns",
-                    "priority": "🟡 WARNING",
+                    "priority": " WARNING",
                     "eta": "20min",
                     "reason": "Multiple anomalies detected recently",
-                    "icon": "🚨"
+                    "icon": ""
                 })
         
         # Display recommendations
@@ -1546,15 +1546,15 @@ class BPredictorDashboard:
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            if st.button("🔄 Apply Recommendations", use_container_width=True):
+            if st.button(" Apply Recommendations", use_container_width=True):
                 st.success("Recommendations applied! Monitoring for improvements...")
         
         with col2:
-            if st.button("📊 Generate Report", use_container_width=True):
+            if st.button(" Generate Report", use_container_width=True):
                 st.info("Report generation started...")
         
         with col3:
-            if st.button("🆘 Request Support", use_container_width=True):
+            if st.button(" Request Support", use_container_width=True):
                 st.warning("Support team notified of system status")
         
         st.markdown('</div>', unsafe_allow_html=True)
@@ -1588,7 +1588,7 @@ if __name__ == "__main__":
         render_tech_intro()
         
         # Customized button based on live agent availability
-        button_text = "🚀 START LIVE MONITORING" if live_agent_available else "🚀 START DEMO MODE"
+        button_text = " START LIVE MONITORING" if live_agent_available else " START DEMO MODE"
         button_help = "Click to begin real-time system monitoring" if live_agent_available else "Live agent not found, starting demo mode"
         
         col1, col2, col3 = st.columns([1, 2, 1])
@@ -1633,7 +1633,7 @@ if __name__ == "__main__":
         st.sidebar.markdown("---")
         col1, col2 = st.sidebar.columns(2)
         with col1:
-            if st.button("🔄 Update Now", use_container_width=True):
+            if st.button(" Update Now", use_container_width=True):
                 # Force data collection
                 try:
                     live_data = collect_metrics()
@@ -1648,5 +1648,6 @@ if __name__ == "__main__":
                 st.session_state.show_dashboard = False
                 stop_realtime_data_collection()
                 st.rerun()
+
 
 
