@@ -139,6 +139,7 @@ def show_landing():
 
     col1, col2, col3 = st.columns([1,2,1])
     with col2:
-        if st.button("🚀 Start Prediction"):
+        if st.button(" Start Prediction"):
             st.session_state.started = True
             st.rerun()
+
